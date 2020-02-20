@@ -31,8 +31,7 @@ class ClassApp extends Component {
     };
 
     deletePesonHanlder = (personIndex) => {
-        const persons = this.state.persons;
-        // This is a bad practice, because we are mutating the original state without using setState
+        const persons = [...this.state.persons];
         persons.splice(personIndex, 1);
         this.setState({
             persons: persons
