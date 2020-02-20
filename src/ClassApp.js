@@ -28,30 +28,37 @@ class ClassApp extends Component {
                 {name: event.target.value, age: 28},
             ]
         })
-    }
+    };
+
+    deletePesonHanlder = (personIndex) => {
+        const persons = this.state.persons;
+        // This is a bad practice, because we are mutating the original state without using setState
+        persons.splice(personIndex, 1);
+        this.setState({
+            persons: persons
+        })
+    };
 
     togglePesonHandler = () => {
         this.setState({
             showPersons: !this.state.showPersons
         })
-    }
+    };
 
     render() {
         let personsDiv = null
         if (this.state.showPersons) {
             personsDiv = (
                 <div>
-                    <Person
-                        name={this.state.persons[0].name}
-                        age={this.state.persons[0].age}
-                        click={this.switchNameHandler.bind(this, "Haladi")}
-                    />
-                    <Person
-                        name={this.state.persons[1].name}
-                        age={this.state.persons[1].age}
-                        click={() => this.switchNameHandler("Basanta")}
-                        changed={this.nameChangeHandler}
-                    />
+                    {this.state.persons.map((person, index) =>
+                        <Person
+                            name={person.name}
+                            age={person.age}
+                            click={() => this.deletePesonHanlder(index)}
+                            changed={this.nameChangeHandler}
+                        />
+                    )}
+
                     {/*The above can be a convenient syntax but is not recommended
                     as react might end up re-rendering a log. TODO: Google this to find more*/}
 
